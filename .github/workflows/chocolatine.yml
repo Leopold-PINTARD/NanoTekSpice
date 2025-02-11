@@ -32,8 +32,8 @@ jobs:
         run: make clean
 
       - name: "Exit if the EXECUTABLE files are not produced"
+        shell: bash
         run: |
-          #!/bin/bash
           exit_code=0
 
           IFS=', ' read -r -a array <<< "$EXECUTABLES"
