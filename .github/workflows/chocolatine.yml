@@ -1,0 +1,85 @@
+env:
+  MIRROR_URL: 'git@github.com:EpitechPromo2028/B-OOP-400-NAN-4-1-tekspice-jocelyn.jean-elie.git'
+  EXECUTABLES: ''
+  BINARY_PATH: 'nanotekspice'
+
+name: Pain_au_chocolat
+
+on:
+  push:
+    branches-ignore:
+      -  ga-ignore-**
+  pull_request:
+    branches-ignore:
+      -  ga-ignore-**
+
+
+jobs:
+  check_program_compilation:
+    name: "Verification of the compilation of the program"
+    timeout-minutes: 2
+    runs-on: ubuntu-latest
+    container:
+      image: epitechcontent/epitest-docker
+    steps:
+      - name: "Get the repository content"
+        uses: actions/checkout@v4
+
+      - name: "Compile the project"
+        run: make
+
+      - name: "Clean the project repository"
+        run: make clean
+
+      - name: "Exit if the EXECUTABLE files are not produced"
+        run: |
+          exit_code=0
+
+          IFS=', ' read -r -a array <<< "$EXECUTABLES"
+
+          for element in "${array[@]}"
+          do
+              if [[ ! -f "$element" ]]; then
+                  echo ::error title=$element does not exist::The file $element does not exist.
+                  exit_code=1
+              fi
+              if [[ ! -x "$element" ]]; then
+                  echo ::error title=$element is not executable::The file $element cant be executed.
+                  exit_code=1
+              fi
+          done
+
+          exit $exit_code
+
+
+  run_tests:
+    name: "Running up the tests"
+    timeout-minutes: 2
+    needs: [check_program_compilation]
+    runs-on: ubuntu-latest
+    container:
+      image: epitechcontent/epitest-docker
+    steps:
+      - name: "Get the repository content"
+        uses: actions/checkout@v4
+
+      - name: "Compile the project with the test files"
+        run: make tests_run
+
+
+  push_to_mirror:
+    name: "Pushing the projet onto the EPITECH repository"
+    needs: [run_tests]
+    if: ${{ github.event_name == 'push' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Get the repository content"
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Mirror the repository content into the target repository
+        uses: pixta-dev/repository-mirroring-action@v1.1.1
+        with:
+          target_repo_url: ${{ env.MIRROR_URL }}
+          ssh_private_key: ${{ secrets.GIT_SSH_PRIVATE_KEY }}
