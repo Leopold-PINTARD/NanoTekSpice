@@ -6,5 +6,4 @@
 *.la
 *.a
 *.lib
-**/Main.cpp
 nanotekspice
