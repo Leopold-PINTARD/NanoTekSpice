@@ -6,4 +6,7 @@
 *.la
 *.a
 *.lib
+*.gcda
+*.gcno
+unit_tests
 nanotekspice

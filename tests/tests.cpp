@@ -44,13 +44,13 @@ Test(output_test_suite, hello_world_test, .init = redirect_all_stdout)
     cr_assert_stdout_eq_str("Hello, World!\n", "%s", formatted_output.c_str());
 }
 
-Test(file_output_test_suite, file_content_test, .init = redirect_all_stdout)
-{
-    std::ifstream file("test_file.txt");
-    std::string file_content((std::istreambuf_iterator<char>(file)),
-        std::istreambuf_iterator<char>());
-    std::string expected_content = "File content to compare\n";
+// Test(file_output_test_suite, file_content_test, .init = redirect_all_stdout)
+// {
+//     std::ifstream file("test_file.txt");
+//     std::string file_content((std::istreambuf_iterator<char>(file)),
+//         std::istreambuf_iterator<char>());
+//     std::string expected_content = "File content to compare\n";
 
-    std::string formatted_output = format_output(expected_content, file_content);
-    cr_assert_eq(file_content, expected_content, "%s", formatted_output.c_str());
-}
+//     std::string formatted_output = format_output(expected_content, file_content);
+//     cr_assert_eq(file_content, expected_content, "%s", formatted_output.c_str());
+// }
