@@ -1,13 +1,15 @@
 /*
 ** EPITECH PROJECT, 2025
-** bootstrap
+** NanoTekSpice
 ** File description:
 ** IComponent
 */
 
-#pragma once
+#ifndef ICOMPONENT_HPP_
+    #define ICOMPONENT_HPP_
 
-#include <string>
+    #include <string>
+    #include "Pin.hpp"
 
 namespace nts
 {
@@ -24,5 +26,9 @@ namespace nts
         virtual nts::Tristate compute(std::size_t pin) = 0;
         virtual void setLink(std::size_t pin, nts::IComponent &other,
             std::size_t otherPin) = 0;
+        virtual const Pin &getPin(size_t pin) const = 0;
+        virtual enum Tristate getLink(std::size_t pin) const = 0;
     };
 }
+
+#endif /* !ICOMPONENT_HPP_ */
