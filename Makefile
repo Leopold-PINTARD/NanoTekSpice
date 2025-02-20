@@ -21,7 +21,10 @@ NAME =	nanotekspice
 
 MAIN_SRC =	src/Main.cpp
 
-SRC	=	
+SRC	=	src/commandLineHandling/CommandLineInput.cpp	\
+		src/fileHandling/FileReader.cpp	\
+		src/fileHandling/Parser.cpp	\
+
 
 TESTS_SRC =	tests/tests.cpp
 

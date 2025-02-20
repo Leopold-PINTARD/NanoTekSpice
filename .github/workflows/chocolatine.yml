@@ -53,10 +53,33 @@ jobs:
           exit $exit_code
 
 
+  check_memory_leaks:
+    name: "Check for memory leaks"
+    timeout-minutes: 2
+    needs: [check_program_compilation]
+    runs-on: ubuntu-latest
+    container:
+      image: epitechcontent/epitest-docker
+    steps:
+      - name: "Get the repository content"
+        uses: actions/checkout@v4
+
+      - name: "Compile the project"
+        run: make
+
+      - name: "Run tests with Valgrind to check for memory leaks"
+        shell: bash
+        run: |
+          IFS=', ' read -r -a array <<< "$EXECUTABLES"
+          for element in "${array[@]}"
+          do
+              valgrind --leak-check=full --error-exitcode=1 ./$element
+          done
+
   run_tests:
     name: "Running up the tests"
     timeout-minutes: 2
-    needs: [check_program_compilation]
+    needs: [check_memory_leaks]
     runs-on: ubuntu-latest
     container:
       image: epitechcontent/epitest-docker
