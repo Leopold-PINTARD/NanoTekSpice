@@ -7,26 +7,29 @@
 
 .PHONY: all clean fclean re tests_run
 
-GREEN =	\033[0;32m
-YELLOW =	\033[0;33m
+GREEN 	=	\033[0;32m
+YELLOW 	=	\033[0;33m
 RED =	\033[0;31m
-NC =	\033[0m
+NC 	=	\033[0m
 
 %.o: %.cpp
 	@echo "$(YELLOW)⚙️  Compiling $(GREEN)$<$(YELLOW)$(NC)"
 	@g++ $(CPPFLAGS) -c $< -o $@
 	@echo "$(GREEN)✅ Generated $(YELLOW)$@$(GREEN) successfully$(NC)"
 
-NAME =	nanotekspice
+NAME	=	nanotekspice
 
-MAIN_SRC =	src/Main.cpp
+MAIN_SRC	=	src/Main.cpp
 
 SRC	=	src/commandLineHandling/CommandLineInput.cpp	\
 		src/fileHandling/FileReader.cpp	\
 		src/fileHandling/Parser.cpp	\
+		src/components/AComponent.cpp	\
+		src/components/Pin.cpp	\
 
 
-TESTS_SRC =	tests/tests.cpp
+TESTS_SRC =	tests/tests.cpp	\
+			tests/randomTests.cpp	\
 
 OBJ =	$(SRC:.cpp=.o)
 

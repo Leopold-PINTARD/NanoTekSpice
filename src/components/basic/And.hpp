@@ -13,9 +13,9 @@
 namespace nts {
     class And : public ADoor {
         public:
-            And();
+            And(std::string name);
             ~And();
-            enum Tristate compute(size_t pin);
+            enum Tristate compute(size_t pin) override;
         protected:
         private:
     };

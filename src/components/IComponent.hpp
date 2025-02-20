@@ -9,7 +9,6 @@
     #define ICOMPONENT_HPP_
 
     #include <string>
-    #include "Pin.hpp"
 
 namespace nts
 {
@@ -18,6 +17,7 @@ namespace nts
         True = true,
         False = false
     };
+    class Pin;
     class IComponent
     {
         public:

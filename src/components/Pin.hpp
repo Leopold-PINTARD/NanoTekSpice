@@ -22,7 +22,7 @@ namespace nts
             };
             Pin(Pin::Type type);
             Pin(const Pin &) = delete;
-            ~Pin() {}
+            ~Pin();
             enum nts::Tristate getStatus() const;
             size_t getLinkedPin(size_t pin) const;
             std::shared_ptr<IComponent> getLinkedComp(size_t comp) const;
