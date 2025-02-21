@@ -21,7 +21,6 @@ namespace nts
                 Output = 1
             };
             Pin(Pin::Type type);
-            Pin(const Pin &) = delete;
             ~Pin();
             enum nts::Tristate getStatus() const;
             enum nts::Tristate updatePinStatus();
