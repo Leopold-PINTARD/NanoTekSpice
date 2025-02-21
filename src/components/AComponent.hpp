@@ -15,15 +15,20 @@ namespace nts
 {
     class AComponent : public IComponent {
         public:
-            //Nothing happens by default, the simulation must be implemented on a case by case basis
+            //Nothing happens by default, the simulation must be implemented on
+            //a case by case basis.
             virtual void simulate(size_t tick) override;
-            //If a link is set on an output pin, the link is outgoing, if it's set on an input pin, the link is incoming
+            //If a link is set on an output pin, the link is outgoing, if it's
+            //set on an input pin, the link is incoming.
             virtual void setLink(size_t thisPin, IComponent &other,
                 size_t otherPin) override;
             nts::Tristate getLink(std::size_t pin) const override;
             virtual const Pin &getPin(size_t pin) const override;
         protected:
+            //The name of the component. It is used to identify it in the circuit.
             std::string compName;
+            //When appending a pin to a component, use pins.emplace_back(Pin::Type).
+            //Type can be either Input or Output.
             std::vector<Pin> pins;
     };
 }
