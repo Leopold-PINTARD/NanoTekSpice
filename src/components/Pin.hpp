@@ -24,6 +24,7 @@ namespace nts
             Pin(const Pin &) = delete;
             ~Pin();
             enum nts::Tristate getStatus() const;
+            enum nts::Tristate updatePinStatus();
             size_t getLinkedPin(size_t pin) const;
             std::shared_ptr<IComponent> getLinkedComp(size_t comp) const;
             void setStatus(enum nts::Tristate val);

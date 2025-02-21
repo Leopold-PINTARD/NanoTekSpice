@@ -56,3 +56,16 @@ nts::Pin::Type nts::Pin::getType() const
 {
     return pinType;
 }
+
+
+//This function is used to update the status of an input pin as it can only be
+//linked to one output pin.
+//
+//If this function is used on an output pin, nothing will happen.
+//
+//Return value: The new status of the pin.
+enum nts::Tristate nts::Pin::updatePinStatus()
+{
+    this->setStatus(this->getLinkedComp(0)->compute(this->getLinkedPin(0)));
+    return this->getStatus();
+}
