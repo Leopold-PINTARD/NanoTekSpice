@@ -71,6 +71,7 @@ clean:
 	@rm -f $(OBJ) $(MAIN_OBJ)
 	@rm -f *.gcda
 	@rm -f *.gcno
+	@rm -f vgcore.*
 
 fclean: clean
 	@echo "$(RED)🧹 Removing binaries...$(NC)"
