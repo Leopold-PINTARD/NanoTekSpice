@@ -10,7 +10,6 @@
 nts::True::True(std::string name)
 {
     this->compName = name;
-    pins.emplace_back(Pin::Output);
 }
 
 nts::True::~True()

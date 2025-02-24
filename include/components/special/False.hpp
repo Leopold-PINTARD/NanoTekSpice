@@ -2,23 +2,23 @@
 ** EPITECH PROJECT, 2025
 ** NanoTekSpice
 ** File description:
-** True
+** False
 */
 
-#ifndef TRUE_HPP_
-    #define TRUE_HPP_
+#ifndef FALSE_HPP_
+    #define FALSE_HPP_
 
     #include "components/special/ASpecial.hpp"
 
 namespace nts {
-    class True : public ASpecial {
+    class False : public ASpecial {
         public:
-            True(std::string name);
-            ~True();
+            False(std::string name);
+            ~False();
             enum Tristate compute(size_t pin) override;
         protected:
         private:
     };
 }
 
-#endif /* !TRUE_HPP_ */
+#endif /* !FALSE_HPP_ */
