@@ -5,7 +5,7 @@
 ** Xor
 */
 
-#include "Xor.hpp"
+#include "components/basic/Xor.hpp"
 
 nts::Xor::Xor(std::string name)
 {

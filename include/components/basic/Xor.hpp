@@ -2,18 +2,18 @@
 ** EPITECH PROJECT, 2025
 ** NanoTekSpice
 ** File description:
-** Not
+** Xor
 */
 
 #pragma once
 
-#include "ADoor.hpp"
+    #include "components/basic/ADoor.hpp"
 
 namespace nts {
-    class Not : public ADoor {
+    class Xor : public ADoor {
         public:
-            Not(std::string name);
-            ~Not();
+            Xor(std::string name);
+            ~Xor();
             enum Tristate compute(size_t pin) override;
         protected:
         private:

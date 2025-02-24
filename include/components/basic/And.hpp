@@ -2,20 +2,23 @@
 ** EPITECH PROJECT, 2025
 ** NanoTekSpice
 ** File description:
-** Xor
+** And
 */
 
-#pragma once
+#ifndef AND_HPP_
+    #define AND_HPP_
 
-    #include "ADoor.hpp"
+    #include "components/basic/ADoor.hpp"
 
 namespace nts {
-    class Xor : public ADoor {
+    class And : public ADoor {
         public:
-            Xor(std::string name);
-            ~Xor();
+            And(std::string name);
+            ~And();
             enum Tristate compute(size_t pin) override;
         protected:
         private:
     };
 }
+
+#endif /* !AND_HPP_ */

@@ -5,7 +5,7 @@
 ** True
 */
 
-#include "True.hpp"
+#include "components/special/True.hpp"
 
 nts::True::True(std::string name)
 {

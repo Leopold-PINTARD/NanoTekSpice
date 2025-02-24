@@ -5,7 +5,7 @@
 ** CommandLineInput
 */
 
-#include "CommandLineInput.hpp"
+#include "commandLineHandling/CommandLineInput.hpp"
 
 CommandLineInput::CommandLineInput(std::string intro)
 {

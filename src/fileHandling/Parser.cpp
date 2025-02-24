@@ -5,8 +5,8 @@
 ** Parser
 */
 
-#include "Parser.hpp"
-#include "FileReader.hpp"
+#include "fileHandling/Parser.hpp"
+#include "fileHandling/FileReader.hpp"
 
 Parser::Parser(std::string path)
 {

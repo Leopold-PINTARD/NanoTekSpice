@@ -5,7 +5,7 @@
 ** Not
 */
 
-#include "Not.hpp"
+#include "components/basic/Not.hpp"
 
 nts::Not::Not(std::string name)
 {

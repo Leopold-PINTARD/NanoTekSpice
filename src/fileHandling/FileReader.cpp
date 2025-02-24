@@ -5,7 +5,7 @@
 ** FileReader
 */
 
-#include "FileReader.hpp"
+#include "fileHandling/FileReader.hpp"
 
 FileReader::FileError::FileError(std::string message)
 {

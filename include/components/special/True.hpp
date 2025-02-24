@@ -8,7 +8,7 @@
 #ifndef TRUE_HPP_
     #define TRUE_HPP_
 
-    #include "../AComponent.hpp"
+    #include "components/AComponent.hpp"
 
 namespace nts {
     class True : public AComponent {

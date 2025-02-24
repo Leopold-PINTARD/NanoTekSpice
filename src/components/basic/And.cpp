@@ -5,7 +5,7 @@
 ** And
 */
 
-#include "And.hpp"
+#include "components/basic/And.hpp"
 #include <iostream>
 
 nts::And::And(std::string name)

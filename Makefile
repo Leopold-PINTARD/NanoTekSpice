@@ -9,8 +9,8 @@
 
 GREEN 	=	\033[0;32m
 YELLOW 	=	\033[0;33m
-RED =	\033[0;31m
-NC 	=	\033[0m
+RED		=	\033[0;31m
+NC 		=	\033[0m
 
 %.o: %.cpp
 	@echo "$(YELLOW)⚙️  Compiling $(GREEN)$<$(YELLOW)$(NC)"
@@ -32,18 +32,20 @@ SRC	=	src/commandLineHandling/CommandLineInput.cpp	\
 		src/components/basic/Xor.cpp	\
 		src/components/special/True.cpp	\
 
-TESTS_SRC =	tests/tests.cpp	\
-			tests/randomTests.cpp	\
+TESTS_SRC	=	tests/tests.cpp			\
+				tests/basicGates.cpp	\
 
-OBJ =	$(SRC:.cpp=.o)
+OBJ	=	$(SRC:.cpp=.o)
 
-MAIN_OBJ =	$(MAIN_SRC:.cpp=.o)
+MAIN_OBJ	=	$(MAIN_SRC:.cpp=.o)
 
-CPPFLAGS =	-std=c++20 -Wall -Wextra -Werror -O2 -g
+INCLUDES	=	-I ./include
 
-CPPTESTFLAGS =	--coverage -lcriterion -Wall -Wextra -Werror -O2 -g
+CPPFLAGS	+=	-std=c++20 -Wall -Wextra -Werror $(INCLUDES) -O2 -g
 
-all: 	$(NAME)
+CPPTESTFLAGS	=	--coverage -lcriterion $(CPPFLAGS)
+
+all: $(NAME)
 
 $(NAME):	$(OBJ) $(MAIN_OBJ)
 	@echo "$(GREEN)🔨 Building $(NAME)...$(NC)"

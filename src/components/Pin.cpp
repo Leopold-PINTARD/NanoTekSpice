@@ -5,7 +5,7 @@
 ** Pin
 */
 
-#include "Pin.hpp"
+#include "components/Pin.hpp"
 
 nts::Pin::Pin(Pin::Type type) : status(Undefined), pinType(type)
 {

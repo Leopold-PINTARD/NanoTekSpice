@@ -2,23 +2,20 @@
 ** EPITECH PROJECT, 2025
 ** NanoTekSpice
 ** File description:
-** And
+** Not
 */
 
-#ifndef AND_HPP_
-    #define AND_HPP_
+#pragma once
 
-    #include "ADoor.hpp"
+#include "components/basic/ADoor.hpp"
 
 namespace nts {
-    class And : public ADoor {
+    class Not : public ADoor {
         public:
-            And(std::string name);
-            ~And();
+            Not(std::string name);
+            ~Not();
             enum Tristate compute(size_t pin) override;
         protected:
         private:
     };
 }
-
-#endif /* !AND_HPP_ */

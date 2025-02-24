@@ -5,7 +5,7 @@
 ** AComponent
 */
 
-#include "AComponent.hpp"
+#include "components/AComponent.hpp"
 
 void nts::AComponent::simulate(size_t tick)
 {

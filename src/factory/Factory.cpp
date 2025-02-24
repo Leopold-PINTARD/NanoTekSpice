@@ -5,9 +5,9 @@
 ** Factory
 */
 
-#include "Factory.hpp"
-#include "../components/Pin.hpp"
-#include "../components/basic/And.hpp"
+#include "factory/Factory.hpp"
+#include "components/Pin.hpp"
+#include "components/basic/And.hpp"
 
 nts::Factory::Factory()
 {
