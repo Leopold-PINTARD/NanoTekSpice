@@ -25,7 +25,7 @@ size_t nts::Pin::getLinkedPin(size_t pin) const
     return linkedPins[pin];
 }
 
-std::shared_ptr<nts::IComponent> nts::Pin::getLinkedComp(size_t comp) const
+nts::IComponent &nts::Pin::getLinkedComp(size_t comp) const
 {
     return linkedComps[comp];
 }
@@ -37,16 +37,16 @@ void nts::Pin::setStatus(enum nts::Tristate val)
 
 void nts::Pin::addLinkedComp(IComponent &comp, size_t pin)
 {
-    linkedComps.push_back(std::shared_ptr<IComponent>(&comp));
+    linkedComps.push_back(comp);
     linkedPins.push_back(pin);
 }
 
-bool nts::Pin::containsLinked(std::shared_ptr<IComponent> linkedComp,
+bool nts::Pin::containsLinked(nts::IComponent &searchedComp,
     size_t linkedPin)
 {
     for (size_t i = 0; i != this->linkedPins.size(); i++) {
         if (this->linkedPins[i] == linkedPin &&
-                this->linkedComps[i] == linkedComp)
+                this->linkedComps[i].get().getName() == searchedComp.getName())
             return true;
     }
     return false;
@@ -67,7 +67,7 @@ nts::Pin::Type nts::Pin::getType() const
 //Return value: The (maybe new) status of the pin.
 enum nts::Tristate nts::Pin::updatePinStatus()
 {
-    if (this->getType() == Pin::Input && this->getLinkedComp(0) != nullptr)
-        this->setStatus(this->getLinkedComp(0)->compute(this->getLinkedPin(0)));
+    if (this->getType() == Pin::Input && this->linkedComps.size() > 0)
+        this->setStatus(this->getLinkedComp(0).compute(this->getLinkedPin(0)));
     return this->getStatus();
 }

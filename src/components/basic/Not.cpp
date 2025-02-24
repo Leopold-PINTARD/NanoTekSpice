@@ -19,19 +19,21 @@ nts::Not::~Not()
 {
 }
 
-static void updatePinStatus(nts::Pin &pin)
-{
-    pin.setStatus(pin.getLinkedComp(0)->compute(pin.getLinkedPin(0)));
-}
-
 nts::Tristate nts::Not::compute(size_t pin)
 {
-    if (this->pins[pin].getType() == Pin::Output) {
-        if (this->pins[0].getStatus() == Undefined)
-            updatePinStatus(this->pins[0]);
-        if (this->pins[0].getStatus() == True)
-            return False;
-        return True;
+    nts::Tristate result;
+
+    if (this->pins[pin].getType() != Pin::Output)
+        return this->pins[pin].getStatus();
+    for (size_t i = 0; i < 1; ++i) {
+        if (this->pins[i].getStatus() == Undefined)
+            this->pins[i].updatePinStatus();
+        if (this->pins[i].getStatus() == Undefined)
+            return Undefined;
     }
-    return this->pins[pin].getStatus();
+    //If the pin is false, return true, else it means the pin is true
+    //then we return false
+    result = this->pins[0].getStatus() == False ? True : False;
+    this->pins[pin].setStatus(result);
+    return result;
 }

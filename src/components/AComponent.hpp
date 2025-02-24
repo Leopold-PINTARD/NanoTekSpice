@@ -10,9 +10,9 @@
 
     #include "IComponent.hpp"
     #include "Pin.hpp"
+    #include <vector>
 
-namespace nts
-{
+namespace nts {
     class AComponent : public IComponent {
         public:
             //Nothing happens by default, the simulation must be implemented on
@@ -24,6 +24,7 @@ namespace nts
                 size_t otherPin) override;
             nts::Tristate getLink(std::size_t pin) const override;
             virtual const Pin &getPin(size_t pin) const override;
+            std::string getName() const;
         protected:
             //The name of the component. It is used to identify it in the circuit.
             std::string compName;

@@ -10,16 +10,14 @@
 
     #include <string>
 
-namespace nts
-{
+namespace nts {
     enum Tristate {
         Undefined = (-true),
         True = true,
         False = false
     };
     class Pin;
-    class IComponent
-    {
+    class IComponent {
         public:
         virtual ~IComponent() = default;
         virtual void simulate(std::size_t tick) = 0;
@@ -28,6 +26,7 @@ namespace nts
             std::size_t otherPin) = 0;
         virtual const Pin &getPin(size_t pin) const = 0;
         virtual enum Tristate getLink(std::size_t pin) const = 0;
+        virtual std::string getName() const = 0;
     };
 }
 

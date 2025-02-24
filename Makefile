@@ -23,10 +23,14 @@ MAIN_SRC	=	src/Main.cpp
 
 SRC	=	src/commandLineHandling/CommandLineInput.cpp	\
 		src/fileHandling/FileReader.cpp	\
-		src/fileHandling/Parser.cpp	\
+		src/fileHandling/Parser.cpp		\
 		src/components/AComponent.cpp	\
-		src/components/Pin.cpp	\
-
+		src/components/Pin.cpp			\
+		src/components/basic/ADoor.cpp	\
+		src/components/basic/And.cpp	\
+		src/components/basic/Not.cpp	\
+		src/components/basic/Xor.cpp	\
+		src/components/special/True.cpp	\
 
 TESTS_SRC =	tests/tests.cpp	\
 			tests/randomTests.cpp	\
