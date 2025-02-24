@@ -31,9 +31,7 @@ nts::Tristate nts::Not::compute(size_t pin)
             updatePinStatus(this->pins[0]);
         if (this->pins[0].getStatus() == True)
             return False;
-        else if (this->pins[0].getStatus() == False)
-            return True;
-        return Undefined;
+        return True;
     }
     return this->pins[pin].getStatus();
 }
