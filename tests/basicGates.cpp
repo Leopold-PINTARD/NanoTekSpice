@@ -52,6 +52,15 @@ Test(and_tests, undefined_test)
     cr_assert_eq(result, nts::Undefined);
 }
 
+Test(and_tests, undefined_false_test)
+{
+    nts::And and_gate("test");
+    class nts::False false_gate("faux");
+    false_gate.setLink(0, and_gate, 0);
+    auto result = and_gate.compute(2);
+    cr_assert_eq(result, nts::False);
+}
+
 Test(and_tests, compute_input_test)
 {
     nts::And and_gate("test");
