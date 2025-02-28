@@ -165,3 +165,23 @@ Test(not_tests, undefined_test)
     auto result = not_gate.compute(1);
     cr_assert_eq(result, nts::Undefined);
 }
+
+Test(not_tests, compute_input_test)
+{
+    nts::Not not_gate("test");
+    class nts::True true_gate("vrai");
+    true_gate.setLink(0, not_gate, 0);
+    auto result = not_gate.compute(0);
+    cr_assert_eq(result, nts::Undefined);
+}
+
+Test(not_tests, compute_input_after_compute_output_test)
+{
+    nts::Not not_gate("test");
+    class nts::True true_gate("vrai");
+    true_gate.setLink(0, not_gate, 0);
+    auto resultcomputer = not_gate.compute(1);
+    auto result = not_gate.compute(0);
+    cr_assert_eq(resultcomputer, nts::False);
+    cr_assert_eq(result, nts::True);
+}
