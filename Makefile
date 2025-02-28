@@ -33,6 +33,7 @@ SRC	=	src/commandLineHandling/CommandLineInput.cpp	\
 		src/components/special/True.cpp					\
 		src/components/special/False.cpp				\
 		src/components/special/ASpecial.cpp				\
+		src/components/special/Input.cpp				\
 
 TESTS_SRC	=	tests/tests.cpp			\
 				tests/basicGates.cpp	\
