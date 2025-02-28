@@ -15,6 +15,7 @@
 #include "components/special/False.hpp"
 #include "components/basic/And.hpp"
 #include "components/basic/Xor.hpp"
+#include "components/basic/Not.hpp"
 
 
 // static void redirect_all_stdout(void)
@@ -138,4 +139,29 @@ Test(xor_tests, compute_input_after_compute_output_test)
     cr_assert_eq(resultcomputer, nts::Undefined);
     cr_assert_eq(result, nts::True);
     cr_assert_eq(result2, nts::Undefined);
+}
+
+Test(not_tests, true_test)
+{
+    nts::Not not_gate("test");
+    class nts::False false_gate("faux");
+    false_gate.setLink(0, not_gate, 0);
+    auto result = not_gate.compute(1);
+    cr_assert_eq(result, nts::True);
+}
+
+Test(not_tests, false_test)
+{
+    nts::Not not_gate("test");
+    class nts::True true_gate("vrai");
+    true_gate.setLink(0, not_gate, 0);
+    auto result = not_gate.compute(1);
+    cr_assert_eq(result, nts::False);
+}
+
+Test(not_tests, undefined_test)
+{
+    nts::Not not_gate("test");
+    auto result = not_gate.compute(1);
+    cr_assert_eq(result, nts::Undefined);
 }
