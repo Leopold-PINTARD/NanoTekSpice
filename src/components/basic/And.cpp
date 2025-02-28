@@ -20,8 +20,6 @@ nts::And::~And()
 nts::Tristate nts::And::compute(size_t pin)
 {
     nts::Tristate result;
-    nts::Tristate status0;
-    nts::Tristate status1;
 
     if (this->pins[pin].getType() != Pin::Output)
         return this->pins[pin].getStatus();
@@ -29,11 +27,11 @@ nts::Tristate nts::And::compute(size_t pin)
         if (this->pins[i].getStatus() == Undefined)
             this->pins[i].updatePinStatus();
     }
-    status0 = this->pins[0].getStatus();
-    status1 = this->pins[1].getStatus();
-    if (status0 == False || status1 == False)
+    if (this->pins[0].getStatus() == False ||
+        this->pins[1].getStatus() == False)
         result = False;
-    else if (status0 == Undefined || status1 == Undefined)
+    else if (this->pins[0].getStatus() == Undefined ||
+        this->pins[1].getStatus() == Undefined)
         result = Undefined;
     else
         result = True;
