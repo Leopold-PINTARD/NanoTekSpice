@@ -14,6 +14,7 @@
 #include "components/special/True.hpp"
 #include "components/special/False.hpp"
 #include "components/basic/And.hpp"
+#include "components/basic/Xor.hpp"
 
 
 // static void redirect_all_stdout(void)
@@ -80,6 +81,60 @@ Test(and_tests, compute_input_after_compute_output_test)
     auto resultcomputer = and_gate.compute(2);
     auto result = and_gate.compute(0);
     auto result2 = and_gate.compute(1);
+    cr_assert_eq(resultcomputer, nts::Undefined);
+    cr_assert_eq(result, nts::True);
+    cr_assert_eq(result2, nts::Undefined);
+}
+
+Test(xor_tests, true_test)
+{
+    nts::Xor xor_gate("test");
+    class nts::True true_gate("test2");
+    true_gate.setLink(0, xor_gate, 0);
+    true_gate.setLink(0, xor_gate, 1);
+    auto result = xor_gate.compute(2);
+    cr_assert_eq(result, nts::False);
+}
+
+Test(xor_tests, false_test)
+{
+    nts::Xor xor_gate("test");
+    class nts::True true_gate("vrai");
+    class nts::False false_gate("faux");
+    true_gate.setLink(0, xor_gate, 0);
+    false_gate.setLink(0, xor_gate, 1);
+    auto result = xor_gate.compute(2);
+    cr_assert_eq(result, nts::True);
+}
+
+Test(xor_tests, undefined_test)
+{
+    nts::Xor xor_gate("test");
+    class nts::True true_gate("vrai");
+    true_gate.setLink(0, xor_gate, 0);
+    auto result = xor_gate.compute(2);
+    cr_assert_eq(result, nts::Undefined);
+}
+
+Test(xor_tests, compute_input_test)
+{
+    nts::Xor xor_gate("test");
+    class nts::True true_gate("vrai");
+    true_gate.setLink(0, xor_gate, 0);
+    auto result = xor_gate.compute(0);
+    auto result2 = xor_gate.compute(1);
+    cr_assert_eq(result, nts::Undefined);
+    cr_assert_eq(result2, nts::Undefined);
+}
+
+Test(xor_tests, compute_input_after_compute_output_test)
+{
+    nts::Xor xor_gate("test");
+    class nts::True true_gate("vrai");
+    true_gate.setLink(0, xor_gate, 0);
+    auto resultcomputer = xor_gate.compute(2);
+    auto result = xor_gate.compute(0);
+    auto result2 = xor_gate.compute(1);
     cr_assert_eq(resultcomputer, nts::Undefined);
     cr_assert_eq(result, nts::True);
     cr_assert_eq(result2, nts::Undefined);
