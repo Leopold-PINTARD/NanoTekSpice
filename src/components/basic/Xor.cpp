@@ -24,7 +24,7 @@ nts::Tristate nts::Xor::compute(size_t pin)
         return this->pins[pin].getStatus();
     for (size_t i = 0; i < 2; ++i) {
         if (this->pins[i].getStatus() == Undefined)
-            this->pins[i].updatePinStatus();
+            this->pins[i].updatePinStatus(0);
         if (this->pins[i].getStatus() == Undefined)
             return Undefined;
     }

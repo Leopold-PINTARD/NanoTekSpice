@@ -27,7 +27,7 @@ nts::Tristate nts::Not::compute(size_t pin)
         return this->pins[pin].getStatus();
     for (size_t i = 0; i < 1; ++i) {
         if (this->pins[i].getStatus() == Undefined)
-            this->pins[i].updatePinStatus();
+            this->pins[i].updatePinStatus(0);
         if (this->pins[i].getStatus() == Undefined)
             return Undefined;
     }
