@@ -31,6 +31,7 @@ SRC	=	src/commandLineHandling/CommandLineInput.cpp	\
 		src/components/basic/Not.cpp					\
 		src/components/basic/Xor.cpp					\
 		src/components/basic/Or.cpp						\
+		src/components/basic/Nand.cpp					\
 		src/components/special/True.cpp					\
 		src/components/special/False.cpp				\
 		src/components/special/ASpecial.cpp				\

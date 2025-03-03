@@ -6,19 +6,19 @@
 */
 
 #include <unistd.h>
-#include "components/basic/And.hpp"
+#include "components/basic/Nand.hpp"
 #include "components/special/True.hpp"
+#include "components/special/False.hpp"
 #include <iostream>
 
 int main(int argc, char **argv)
 {
     (void)argc;
     (void)argv;
-    nts::And and_gate("test");
-    class nts::True true_gate("test2");
-    true_gate.setLink(0, and_gate, 0);
-    // true_gate.setLink(0, and_gate, 1);
-    auto result = and_gate.compute(2);
+    nts::Nand nand_gate("test");
+    class nts::False gate("test2");
+    gate.setLink(0, nand_gate, 0);
+    auto result = nand_gate.compute(2);
     if (result == nts::Tristate::Undefined) {
         std::cout << "Result of compute: Undefined" << std::endl;
     } else if (result == nts::Tristate::True) {

@@ -14,6 +14,7 @@
 #include "components/special/True.hpp"
 #include "components/special/False.hpp"
 #include "components/basic/And.hpp"
+#include "components/basic/Nand.hpp"
 #include "components/basic/Xor.hpp"
 #include "components/basic/Or.hpp"
 #include "components/basic/Not.hpp"
@@ -256,6 +257,69 @@ Test(or_tests, compute_input_after_compute_output_test)
     auto result = or_gate.compute(0);
     auto result2 = or_gate.compute(1);
     cr_assert_eq(resultcomputer, nts::True);
+    cr_assert_eq(result, nts::True);
+    cr_assert_eq(result2, nts::Undefined);
+}
+
+Test(nand_tests, true_test)
+{
+    nts::Nand nand_gate("test");
+    class nts::True true_gate("test2");
+    true_gate.setLink(0, nand_gate, 0);
+    true_gate.setLink(0, nand_gate, 1);
+    auto result = nand_gate.compute(2);
+    cr_assert_eq(result, nts::False);
+}
+
+Test(nand_tests, false_test)
+{
+    nts::Nand nand_gate("test");
+    class nts::True true_gate("vrai");
+    class nts::False false_gate("faux");
+    true_gate.setLink(0, nand_gate, 0);
+    false_gate.setLink(0, nand_gate, 1);
+    auto result = nand_gate.compute(2);
+    cr_assert_eq(result, nts::True);
+}
+
+Test(nand_tests, undefined_test)
+{
+    nts::Nand nand_gate("test");
+    class nts::True true_gate("vrai");
+    true_gate.setLink(0, nand_gate, 0);
+    auto result = nand_gate.compute(2);
+    cr_assert_eq(result, nts::Undefined);
+}
+
+Test(nand_tests, undefined_false_test)
+{
+    nts::Nand nand_gate("test");
+    class nts::False false_gate("faux");
+    false_gate.setLink(0, nand_gate, 0);
+    auto result = nand_gate.compute(2);
+    cr_assert_eq(result, nts::True);
+}
+
+Test(nand_tests, compute_input_test)
+{
+    nts::Nand nand_gate("test");
+    class nts::True true_gate("vrai");
+    true_gate.setLink(0, nand_gate, 0);
+    auto result = nand_gate.compute(0);
+    auto result2 = nand_gate.compute(1);
+    cr_assert_eq(result, nts::Undefined);
+    cr_assert_eq(result2, nts::Undefined);
+}
+
+Test(nand_tests, compute_input_after_compute_output_test)
+{
+    nts::Nand nand_gate("test");
+    class nts::True true_gate("vrai");
+    true_gate.setLink(0, nand_gate, 0);
+    auto resultcomputer = nand_gate.compute(2);
+    auto result = nand_gate.compute(0);
+    auto result2 = nand_gate.compute(1);
+    cr_assert_eq(resultcomputer, nts::Undefined);
     cr_assert_eq(result, nts::True);
     cr_assert_eq(result2, nts::Undefined);
 }
