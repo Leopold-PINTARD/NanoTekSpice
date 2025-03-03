@@ -67,7 +67,8 @@ nts::Pin::Type nts::Pin::getType() const
 //Return value: The (maybe new) status of the pin.
 enum nts::Tristate nts::Pin::updatePinStatus(size_t input_comp)
 {
-    if (this->getType() == Pin::Input && this->linkedComps.size() > 0)
+    if (this->getType() == Pin::Input && this->linkedComps.size() > 0 &&
+        input_comp < this->linkedComps.size())
         this->setStatus(this->getLinkedComp(input_comp).compute(
             this->getLinkedPin(input_comp)));
     return this->getStatus();
