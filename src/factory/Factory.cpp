@@ -8,8 +8,10 @@
 #include "factory/Factory.hpp"
 #include "components/Pin.hpp"
 #include "components/basic/And.hpp"
+#include "components/basic/Nand.hpp"
 #include "components/basic/Not.hpp"
 #include "components/basic/Xor.hpp"
+#include "components/basic/Or.hpp"
 #include "../../include/components/special/True.hpp"
 #include "../../include/components/special/False.hpp"
 #include "../../include/components/special/Input.hpp"
@@ -54,6 +56,12 @@ void nts::Factory::registerBasicComponents()
     };
     _map["xor"] = [](const std::string &name) -> nts::IComponent* {
         return new nts::Xor(name);
+    };
+    _map["or"] = [](const std::string &name) -> nts::IComponent* {
+        return new nts::Or(name);
+    };
+    _map["nand"] = [](const std::string &name) -> nts::IComponent* {
+        return new nts::Nand(name);
     };
 }
 
