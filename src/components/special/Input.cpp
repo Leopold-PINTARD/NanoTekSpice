@@ -26,3 +26,8 @@ void nts::Input::changeState(Tristate new_state)
 {
     this->pins[0].setStatus(new_state);
 }
+
+nts::Tristate nts::Input::getState() const
+{
+    return this->pins[0].getStatus();
+}

@@ -17,6 +17,7 @@ namespace nts {
             ~Input();
             enum Tristate compute(size_t pin) override;
             void changeState(Tristate new_state);
+            enum Tristate getState() const;
         protected:
         private:
     };

@@ -36,6 +36,13 @@ namespace nts {
             void handleCommand(std::string input,
                 std::vector<std::unique_ptr<nts::IComponent>> &chips);
             void registerCommand();
+            void commandExit(std::vector<std::unique_ptr<nts::IComponent>>
+                &chips, std::vector<std::string> args);
+            void commandDisplay(std::vector<std::unique_ptr<nts::IComponent>>
+                &chips, std::vector<std::string> args);
+            void displayInOrder(std::vector<std::pair<std::string,
+                std::string>> inputs, std::vector<std::pair<std::string,
+                std::string>> outputs);
         protected:
         private:
             std::string introString;

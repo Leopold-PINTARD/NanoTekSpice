@@ -6,6 +6,8 @@
 */
 
 #include "commandLineHandling/CommandLineInput.hpp"
+#include "components/special/Input.hpp"
+#include "components/special/Output.hpp"
 #include <iostream>
 #include <sstream>
 
@@ -59,6 +61,10 @@ std::string nts::CommandLineInput::getIntroString()
 
 void nts::CommandLineInput::registerCommand()
 {
+    commands["exit"] = std::bind(&CommandLineInput::commandExit, this,
+        std::placeholders::_1, std::placeholders::_2);
+    commands["display"] = std::bind(&CommandLineInput::commandDisplay, this,
+        std::placeholders::_1, std::placeholders::_2);
 }
 
 void nts::CommandLineInput::handleCommand(std::string input,
@@ -91,11 +97,71 @@ void nts::CommandLineInput::handleInput(std::vector
 {
     std::string input = getInputNotParsed();
 
-    if (input.starts_with("exit")) {
-        end = true;
-        return;
-    }
     if (end == true)
         return;
     handleCommand(input, chips);
+}
+
+void nts::CommandLineInput::commandExit(std::vector
+    <std::unique_ptr<nts::IComponent>> &chips, std::vector<std::string> args)
+{
+    (void)chips;
+    if (args.size() != 1)
+        throw InputError("exit: invalid number of arguments");
+    end = true;
+}
+
+std::string getStatusString(nts::Tristate state)
+{
+    if (state == nts::Tristate::True)
+        return "1";
+    if (state == nts::Tristate::False)
+        return "0";
+    return "U";
+}
+
+void nts::CommandLineInput::displayInOrder(std::vector
+    <std::pair<std::string, std::string>> inputs, std::vector
+    <std::pair<std::string, std::string>> outputs)
+{
+    std::sort(inputs.begin(), inputs.end(), [](const std::pair<std::string,
+        std::string> &a, const std::pair<std::string, std::string> &b) {
+        return a.first < b.first;
+    });
+    std::sort(outputs.begin(), outputs.end(), [](const std::pair<std::string,
+        std::string> &a, const std::pair<std::string, std::string> &b) {
+        return a.first < b.first;
+    });
+    std::cout << "input(s):" << std::endl;
+    for (const auto &input : inputs) {
+        std::cout << "\t" << input.first << ": " << input.second << std::endl;
+    }
+    std::cout << "output(s):" << std::endl;
+    for (const auto &output : outputs) {
+        std::cout << "\t" << output.first << ": " << output.second << std::endl;
+    }
+}
+
+void nts::CommandLineInput::commandDisplay(std::vector
+    <std::unique_ptr<nts::IComponent>> &chips, std::vector<std::string> args)
+{
+    std::vector<std::pair<std::string, std::string>> inputs;
+    std::vector<std::pair<std::string, std::string>> outputs;
+    Input *input;
+    Output *output;
+
+    if (args.size() != 1)
+        throw InputError("display: invalid number of arguments");
+    for (auto &chip : chips) {
+        if (dynamic_cast<Input *>(chip.get()) != nullptr) {
+            input = dynamic_cast<Input *>(chip.get());
+            inputs.push_back(std::make_pair(input->getName(),
+                getStatusString(input->getState())));
+        } else if (dynamic_cast<Output *>(chip.get()) != nullptr) {
+            output = dynamic_cast<Output *>(chip.get());
+            outputs.push_back(std::make_pair(output->getName(),
+                getStatusString(output->getState())));
+        }
+    }
+    displayInOrder(inputs, outputs);
 }
