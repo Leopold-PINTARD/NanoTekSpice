@@ -13,6 +13,7 @@
 #include "../../include/components/special/True.hpp"
 #include "../../include/components/special/False.hpp"
 #include "../../include/components/special/Input.hpp"
+#include "../../include/components/special/Output.hpp"
 
 nts::Factory::FactoryError::FactoryError(std::string message)
 {
@@ -43,7 +44,7 @@ void nts::Factory::registerBasicComponents()
         return new nts::Input(name);
     };
     _map["output"] = [](const std::string &name) -> nts::IComponent* {
-        return new nts::Input(name);
+        return new nts::Output(name);
     };
     _map["and"] = [](const std::string &name) -> nts::IComponent* {
         return new nts::And(name);
