@@ -64,7 +64,8 @@ run: re
 
 valgrind: $(NAME)
 	@echo "$(YELLOW)🔍 Running Valgrind...$(NC)"
-	@valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)
+	@echo exit | valgrind --leak-check=full	\
+	--show-leak-kinds=all ./$(NAME) ./tests/xor.nts
 
 tests_run:
 	@echo "$(YELLOW)🧪 Running tests...$(NC)"
