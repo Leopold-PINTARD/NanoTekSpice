@@ -28,7 +28,6 @@ const char *nts::Parser::ParserError::what() const throw()
 nts::Parser::Parser(std::string path)
 {
     _path = path;
-    readContent();
 }
 
 nts::Parser::~Parser()
@@ -130,6 +129,15 @@ void nts::Parser::handleSection()
         throw ParserError("Missing section");
 }
 
+bool nts::Parser::nameCheck(std::string name)
+{
+    for (auto &chip : chips) {
+        if (chip->getName() == name)
+            return true;
+    }
+    return false;
+}
+
 std::vector<std::string>::iterator
     nts::Parser::handleDotChipset(std::vector<std::string>::iterator it)
 {
@@ -142,7 +150,7 @@ std::vector<std::string>::iterator
         ss.clear();
         ss.str(*it);
         ss >> chip >> name >> trash;
-        if (!trash.empty() || chip.empty() || name.empty())
+        if (!trash.empty() || chip.empty() || name.empty() || nameCheck(name))
             throw ParserError("chipset not valid");
         try {
             chips.push_back(factory.createComponent(chip, name));

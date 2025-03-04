@@ -40,6 +40,7 @@ namespace nts {
             void removeTrallingSpaces();
             void setChipsets();
             void setLinks();
+            bool nameCheck(std::string name);
             std::vector<std::string> _content;
             void handleSection();
             std::vector<std::string>::iterator
