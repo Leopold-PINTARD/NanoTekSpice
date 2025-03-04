@@ -48,6 +48,12 @@ void nts::Factory::registerBasicComponents()
     _map["output"] = [](const std::string &name) -> nts::IComponent* {
         return new nts::Output(name);
     };
+    _map["true"] = [](const std::string &name) -> nts::IComponent* {
+        return new class nts::True(name);
+    };
+    _map["false"] = [](const std::string &name) -> nts::IComponent* {
+        return new class nts::False(name);
+    };
     _map["and"] = [](const std::string &name) -> nts::IComponent* {
         return new nts::And(name);
     };
