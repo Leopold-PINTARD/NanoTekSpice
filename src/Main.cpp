@@ -6,25 +6,52 @@
 */
 
 #include <unistd.h>
-#include "components/basic/Nand.hpp"
-#include "components/special/True.hpp"
-#include "components/special/False.hpp"
+#include "../include/fileHandling/Parser.hpp"
+#include "../include/commandLineHandling/CommandLineInput.hpp"
 #include <iostream>
+
+void printUsage()
+{
+    std::cout << "USAGE" << std::endl;
+    std::cout << "\t./nanotekspice [file.nts]" << std::endl;
+    std::cout << "DESCRIPTION" << std::endl;
+    std::cout << "\tfile.nts\tfile describing the circuit" << std::endl;
+}
+
+int startCommandLine(std::vector<std::unique_ptr<nts::IComponent>> chips)
+{
+    nts::CommandLineInput input("> ");
+
+    while (input.end == false) {
+        try {
+            input.handleInput(chips);
+        } catch (const std::exception &e) {
+            std::cerr << e.what() << std::endl;
+            return 84;
+        }
+    }
+    return 0;
+}
+
+int startProgram(std::string path)
+{
+    nts::Parser parser(path);
+
+    try {
+        parser.readContent();
+        auto chips = parser.getChips();
+        return startCommandLine(std::move(chips));
+    } catch (const std::exception &e) {
+        std::cerr << e.what() << std::endl;
+        return 84;
+    }
+}
 
 int main(int argc, char **argv)
 {
-    (void)argc;
-    (void)argv;
-    nts::Nand nand_gate("test");
-    class nts::False gate("test2");
-    gate.setLink(0, nand_gate, 0);
-    auto result = nand_gate.compute(2);
-    if (result == nts::Tristate::Undefined) {
-        std::cout << "Result of compute: Undefined" << std::endl;
-    } else if (result == nts::Tristate::True) {
-        std::cout << "Result of compute: True" << std::endl;
-    } else if (result == nts::Tristate::False) {
-        std::cout << "Result of compute: False" << std::endl;
+    if (argc != 2) {
+        printUsage();
+        return 84;
     }
-    return 0;
+    return startProgram(argv[1]);
 }

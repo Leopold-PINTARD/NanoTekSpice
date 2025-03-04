@@ -24,6 +24,7 @@ MAIN_SRC	=	src/Main.cpp
 SRC	=	src/commandLineHandling/CommandLineInput.cpp	\
 		src/fileHandling/FileReader.cpp					\
 		src/fileHandling/Parser.cpp						\
+		src/factory/Factory.cpp							\
 		src/components/AComponent.cpp					\
 		src/components/Pin.cpp							\
 		src/components/basic/ADoor.cpp					\

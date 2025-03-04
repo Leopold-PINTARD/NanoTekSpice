@@ -18,8 +18,16 @@ namespace nts {
         public:
             Factory();
             ~Factory();
-            std::unique_ptr<IComponent>
-                createComponent(const std::string &name);
+            class FactoryError : public std::exception {
+                public:
+                    FactoryError(std::string message);
+                    ~FactoryError();
+                    const char *what() const throw();
+                private:
+                    std::string _message;
+            };
+            std::unique_ptr<IComponent> createComponent(const std::string
+                &comp, const std::string &name);
             void registerComponent(const std::string &name,
                 std::function<nts::IComponent*(const std::string&)> func);
             void registerBasicComponents();
