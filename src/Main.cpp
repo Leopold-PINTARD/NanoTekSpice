@@ -22,6 +22,7 @@ int startCommandLine(std::vector<std::unique_ptr<nts::IComponent>> chips)
 {
     nts::CommandLineInput input("> ");
 
+    input.commandSimulate(chips);
     while (input.end == false) {
         try {
             input.handleInput(chips);

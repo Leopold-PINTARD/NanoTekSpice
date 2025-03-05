@@ -38,6 +38,7 @@ namespace nts {
             void removeEmptyLines();
             void replaceTabs();
             void removeTrallingSpaces();
+            void replaceDoubleSpaces();
             void setChipsets();
             void setLinks();
             bool nameCheck(std::string name);

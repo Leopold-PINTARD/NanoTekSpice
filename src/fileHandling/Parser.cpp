@@ -44,6 +44,7 @@ void nts::Parser::readContent()
         removeTrallingSpaces();
         removeEmptyLines();
         replaceTabs();
+        replaceDoubleSpaces();
         handleSection();
     } catch (const std::exception &e) {
         throw ParserError(e.what());
@@ -94,6 +95,19 @@ void nts::Parser::replaceTabs()
         for (size_t i = 0; i < it->size(); i++) {
             if ((*it)[i] == '\t') {
                 (*it)[i] = ' ';
+            }
+        }
+    }
+}
+
+void nts::Parser::replaceDoubleSpaces()
+{
+    for (std::vector<std::string>::iterator
+        it = _content.begin(); it != _content.end(); it++) {
+        for (size_t i = 0; i < it->size(); i++) {
+            if ((*it)[i] == ' ' && (*it)[i + 1] == ' ') {
+                it->erase(it->begin() + i);
+                i--;
             }
         }
     }

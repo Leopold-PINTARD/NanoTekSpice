@@ -36,7 +36,7 @@ nts::CommandLineInput::CommandLineInput(std::string intro)
 {
     introString = intro;
     end = false;
-    tick = 0;
+    tick = -1;
     registerCommand();
 }
 
