@@ -28,13 +28,6 @@ void nts::AComponent::setLink(size_t thisPin, IComponent &other, size_t otherPin
     other.setLink(otherPin, *this, thisPin);
 }
 
-nts::Tristate nts::AComponent::getLink(std::size_t pin) const
-{
-    if (pins[pin].getType() == Pin::Input)
-        return pins[pin].getLinkedComp(0).compute(pins[pin].getLinkedPin(0));
-    return pins[pin].getStatus();
-};
-
 std::string nts::AComponent::getName() const
 {
     return this->compName;

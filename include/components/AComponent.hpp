@@ -22,7 +22,6 @@ namespace nts {
             //set on an input pin, the link is incoming.
             virtual void setLink(size_t thisPin, IComponent &other,
                 size_t otherPin) override;
-            nts::Tristate getLink(std::size_t pin) const override;
             std::string getName() const;
         protected:
             //The name of the component. It is used to identify it in the circuit.
