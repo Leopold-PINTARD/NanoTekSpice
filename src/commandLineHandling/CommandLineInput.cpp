@@ -36,7 +36,7 @@ nts::CommandLineInput::CommandLineInput(std::string intro)
 {
     introString = intro;
     end = false;
-    tick = -1;
+    tick = 0;
     registerCommand();
 }
 
@@ -159,7 +159,7 @@ void nts::CommandLineInput::commandDisplay(std::vector<std::unique_ptr
     Input *input;
     Output *output;
 
-    std::cout << "tick: " << tick << std::endl;
+    std::cout << "tick: " << (tick - 1) << std::endl;
     for (auto &chip : chips) {
         if (dynamic_cast<Input *>(chip.get()) != nullptr) {
             input = dynamic_cast<Input *>(chip.get());

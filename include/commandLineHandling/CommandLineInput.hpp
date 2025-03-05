@@ -28,6 +28,7 @@ namespace nts {
             CommandLineInput(std::string intro = "");
             ~CommandLineInput();
             bool end;
+            size_t tick;
             std::string getInputNotParsed();
             void setIntroString(std::string intro);
             std::string getIntroString();
@@ -53,7 +54,6 @@ namespace nts {
                 &chips);
         protected:
         private:
-            size_t tick;
             std::string introString;
             std::unordered_map<std::string, std::function<void(std::vector
                 <std::unique_ptr<nts::IComponent>>&)>> commands;
