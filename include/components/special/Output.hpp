@@ -16,6 +16,7 @@ namespace nts {
             Output(std::string name);
             ~Output();
             enum Tristate compute(size_t pin) override;
+            void simulate(size_t tick) override;
         protected:
         private:
     };

@@ -23,17 +23,12 @@ nts::Tristate nts::Not::compute(size_t pin)
 {
     nts::Tristate result;
 
-    if (this->pins[pin].getType() != Pin::Output)
-        return this->pins[pin].getStatus();
-    for (size_t i = 0; i < 1; ++i) {
-        if (this->pins[i].getStatus() == Undefined)
-            this->pins[i].updatePinStatus(0);
-        if (this->pins[i].getStatus() == Undefined)
-            return Undefined;
-    }
-    //If the pin is false, return true, else it means the pin is true
-    //then we return false
-    result = this->pins[0].getStatus() == False ? True : False;
+    if (this->pins[pin].getType() == Pin::Input)
+        return this->pins[pin].updatePinStatus();
+    if (this->pins[0].getStatus() == Undefined)
+        result = Undefined;
+    else
+        result = this->pins[0].getStatus() == False ? True : False;
     this->pins[pin].setStatus(result);
     return result;
 }

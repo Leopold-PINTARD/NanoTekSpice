@@ -17,9 +17,14 @@ nts::Output::~Output()
 {
 }
 
+void nts::Output::simulate(size_t tick)
+{
+    while (pins[0].getCurrentTick() < tick)
+        this->pins[0].updatePinStatus();
+}
+
 nts::Tristate nts::Output::compute(size_t pin)
 {
     (void)pin;
-    this->pins[0].updatePinStatus(0);
     return this->pins[0].getStatus();
 }

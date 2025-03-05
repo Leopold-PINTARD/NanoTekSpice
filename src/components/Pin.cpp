@@ -6,6 +6,7 @@
 */
 
 #include "components/Pin.hpp"
+#include <iostream>
 
 nts::Pin::Pin(Pin::Type type) : status(Undefined), pinType(type),
     currentTick(0)
@@ -76,6 +77,7 @@ enum nts::Tristate nts::Pin::updatePinStatus(size_t input_comp)
     currentTick++;
     if (this->getType() == Pin::Input && this->linkedComps.size() > 0 &&
         input_comp < this->linkedComps.size()) {
+        this->getLinkedComp(input_comp).simulate(currentTick);
         this->setStatus(this->getLinkedComp(input_comp).compute(
             this->getLinkedPin(input_comp)));
     }
