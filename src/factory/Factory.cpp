@@ -34,13 +34,14 @@ const char *nts::Factory::FactoryError::what() const throw()
 nts::Factory::Factory()
 {
     registerBasicComponents();
+    registerSpecialComponents();
 }
 
 nts::Factory::~Factory()
 {
 }
 
-void nts::Factory::registerBasicComponents()
+void nts::Factory::registerSpecialComponents()
 {
     _map["input"] = [](const std::string &name) -> nts::IComponent* {
         return new nts::Input(name);
@@ -54,6 +55,10 @@ void nts::Factory::registerBasicComponents()
     _map["false"] = [](const std::string &name) -> nts::IComponent* {
         return new class nts::False(name);
     };
+}
+
+void nts::Factory::registerBasicComponents()
+{
     _map["and"] = [](const std::string &name) -> nts::IComponent* {
         return new nts::And(name);
     };
