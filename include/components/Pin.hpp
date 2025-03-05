@@ -22,7 +22,7 @@ namespace nts {
             Pin(Pin::Type type);
             ~Pin();
             enum nts::Tristate getStatus() const;
-            enum nts::Tristate updatePinStatus(size_t input_comp);
+            enum nts::Tristate updatePinStatus(size_t input_comp = 0);
             size_t getLinkedPin(size_t pin) const;
             IComponent &getLinkedComp(size_t comp) const;
             void setStatus(enum nts::Tristate val);
