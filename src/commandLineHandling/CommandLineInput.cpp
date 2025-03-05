@@ -150,11 +150,11 @@ void nts::CommandLineInput::commandDisplay(std::vector<std::unique_ptr
         if (dynamic_cast<Input *>(chip.get()) != nullptr) {
             input = dynamic_cast<Input *>(chip.get());
             inputs.push_back(std::make_pair(input->getName(),
-                getStatusString(input->getState())));
+                getStatusString(input->compute(0))));
         } else if (dynamic_cast<Output *>(chip.get()) != nullptr) {
             output = dynamic_cast<Output *>(chip.get());
             outputs.push_back(std::make_pair(output->getName(),
-                getStatusString(output->getState())));
+                getStatusString(output->compute(0))));
         }
     }
     displayInOrder(inputs, outputs);

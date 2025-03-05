@@ -23,8 +23,3 @@ nts::Tristate nts::Output::compute(size_t pin)
     this->pins[0].updatePinStatus(0);
     return this->pins[0].getStatus();
 }
-
-nts::Tristate nts::Output::getState() const
-{
-    return this->pins[0].getStatus();
-}

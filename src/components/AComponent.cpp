@@ -27,11 +27,6 @@ nts::Tristate nts::AComponent::getLink(std::size_t pin) const
     return pins[pin].getStatus();
 };
 
-const nts::Pin &nts::AComponent::getPin(size_t pin) const
-{
-    return this->pins[pin];
-}
-
 std::string nts::AComponent::getName() const
 {
     return this->compName;
