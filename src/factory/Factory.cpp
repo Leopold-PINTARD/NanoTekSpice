@@ -16,6 +16,7 @@
 #include "../../include/components/special/False.hpp"
 #include "../../include/components/special/Input.hpp"
 #include "../../include/components/special/Output.hpp"
+#include "../../include/components/special/Clock.hpp"
 
 nts::Factory::FactoryError::FactoryError(std::string message)
 {
@@ -48,6 +49,9 @@ void nts::Factory::registerSpecialComponents()
     };
     _map["output"] = [](const std::string &name) -> nts::IComponent* {
         return new nts::Output(name);
+    };
+    _map["clock"] = [](const std::string &name) -> nts::IComponent* {
+        return new nts::Clock(name);
     };
     _map["true"] = [](const std::string &name) -> nts::IComponent* {
         return new class nts::True(name);
