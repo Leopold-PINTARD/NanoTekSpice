@@ -45,6 +45,8 @@ TESTS_SRC	=	tests/tests.cpp			\
 				tests/specialGates.cpp	\
 				tests/factoryTests.cpp	\
 				tests/fileReaderTests.cpp	\
+				tests/parserTests.cpp	\
+				tests/commandLineTests.cpp	\
 
 OBJ	=	$(SRC:.cpp=.o)
 
@@ -72,7 +74,7 @@ valgrind: $(NAME)
 	@echo exit | valgrind --leak-check=full	--error-exitcode=1 \
 	--show-leak-kinds=all ./$(NAME) ./tests/xor.nts
 
-tests_run:
+tests_run: fclean
 	@echo "$(YELLOW)🧪 Running tests...$(NC)"
 	@g++ -o unit_tests $(SRC) $(TESTS_SRC) $(CPPTESTFLAGS)
 	@./unit_tests

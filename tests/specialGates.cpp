@@ -47,6 +47,7 @@ Test(input_tests, true_test)
 {
     class nts::Input input_gate("test");
     input_gate.changeState(nts::True);
+    input_gate.simulate(1);
     cr_assert_eq(input_gate.compute(0), nts::True);
 }
 
@@ -54,6 +55,7 @@ Test(input_tests, false_test)
 {
     class nts::Input input_gate("test");
     input_gate.changeState(nts::False);
+    input_gate.simulate(1);
     cr_assert_eq(input_gate.compute(0), nts::False);
 }
 
