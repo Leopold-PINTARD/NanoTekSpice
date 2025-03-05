@@ -143,11 +143,11 @@ void nts::CommandLineInput::displayInOrder(std::vector
     });
     std::cout << "input(s):" << std::endl;
     for (const auto &input : inputs) {
-        std::cout << "\t" << input.first << ": " << input.second << std::endl;
+        std::cout << "  " << input.first << ": " << input.second << std::endl;
     }
     std::cout << "output(s):" << std::endl;
     for (const auto &output : outputs) {
-        std::cout << "\t" << output.first << ": " << output.second << std::endl;
+        std::cout << "  " << output.first << ": " << output.second << std::endl;
     }
 }
 
