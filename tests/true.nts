@@ -1,0 +1,6 @@
+.chipsets:
+true true
+output output
+
+.links:
+true:1 output:1
