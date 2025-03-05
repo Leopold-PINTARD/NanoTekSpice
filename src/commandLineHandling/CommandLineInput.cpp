@@ -11,6 +11,10 @@
 #include <iostream>
 #include <sstream>
 #include <algorithm>
+#include <atomic>
+#include <csignal>
+
+std::atomic<bool> noSigInt(true);
 
 nts::CommandLineInput::InputError::InputError(std::string const &message)
 {
@@ -75,6 +79,10 @@ void nts::CommandLineInput::registerCommand()
     commands.emplace("simulate", [this](std::vector<std::unique_ptr
         <nts::IComponent>> &chips) {
         this->commandSimulate(chips);
+    });
+    commands.emplace("loop", [this](std::vector<std::unique_ptr
+        <nts::IComponent>> &chips) {
+        this->commandLoop(chips);
     });
 }
 
@@ -214,4 +222,26 @@ void nts::CommandLineInput::commandSimulate(std::vector<std::unique_ptr
         if (dynamic_cast<Output *>(chip.get()) != nullptr)
             chip->simulate(tick);
     }
+}
+
+void signalHandler(int s)
+{
+    (void)s;
+    noSigInt = false;
+}
+
+void nts::CommandLineInput::commandLoop(std::vector<std::unique_ptr
+    <nts::IComponent>> &chips)
+{
+    struct sigaction sigIntHandler;
+
+    sigIntHandler.sa_handler = signalHandler;
+    sigemptyset(&sigIntHandler.sa_mask);
+    sigIntHandler.sa_flags = 0;
+    sigaction(SIGINT, &sigIntHandler, nullptr);
+    while (noSigInt) {
+        commandSimulate(chips);
+        commandDisplay(chips);
+    }
+    noSigInt = true;
 }
