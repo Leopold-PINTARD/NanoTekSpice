@@ -61,35 +61,32 @@ std::string nts::CommandLineInput::getIntroString()
 
 void nts::CommandLineInput::registerCommand()
 {
-    commands["exit"] = std::bind(&CommandLineInput::commandExit, this,
-        std::placeholders::_1, std::placeholders::_2);
-    commands["display"] = std::bind(&CommandLineInput::commandDisplay, this,
-        std::placeholders::_1, std::placeholders::_2);
+    commands.emplace("exit", [this](std::vector<std::unique_ptr
+        <nts::IComponent>> &chips) {
+        this->commandExit(chips);
+    });
+
+    commands.emplace("display", [this](std::vector<std::unique_ptr
+        <nts::IComponent>> &chips) {
+        this->commandDisplay(chips);
+    });
 }
 
 void nts::CommandLineInput::handleCommand(std::string input,
     std::vector<std::unique_ptr<nts::IComponent>> &chips)
 {
-    std::vector<std::string> args;
     std::istringstream iss(input);
-    std::string word;
+    std::string command;
+    std::string arg;
 
-    while (iss >> word) {
-        args.push_back(word);
-    }
-    if (args.size() == 0) {
-        std::cerr << "No command entered" << std::endl;
+    iss >> command;
+    if (commandChangePinValue(command, chips))
+        return;
+    if (commands.find(command) == commands.end()) {
+        std::cerr << "Invalid Command" << std::endl;
         return;
     }
-    if (commands.find(args[0]) == commands.end()) {
-        std::cerr << "Command not found" << std::endl;
-        return;
-    }
-    try {
-        commands[args[0]](chips, args);
-    } catch (const std::exception &e) {
-        std::cerr << e.what() << std::endl;
-    }
+    commands[command](chips);
 }
 
 void nts::CommandLineInput::handleInput(std::vector
@@ -103,11 +100,9 @@ void nts::CommandLineInput::handleInput(std::vector
 }
 
 void nts::CommandLineInput::commandExit(std::vector
-    <std::unique_ptr<nts::IComponent>> &chips, std::vector<std::string> args)
+    <std::unique_ptr<nts::IComponent>> &chips)
 {
     (void)chips;
-    if (args.size() != 1)
-        throw InputError("exit: invalid number of arguments");
     end = true;
 }
 
@@ -142,16 +137,14 @@ void nts::CommandLineInput::displayInOrder(std::vector
     }
 }
 
-void nts::CommandLineInput::commandDisplay(std::vector
-    <std::unique_ptr<nts::IComponent>> &chips, std::vector<std::string> args)
+void nts::CommandLineInput::commandDisplay(std::vector<std::unique_ptr
+    <nts::IComponent>> &chips)
 {
     std::vector<std::pair<std::string, std::string>> inputs;
     std::vector<std::pair<std::string, std::string>> outputs;
     Input *input;
     Output *output;
 
-    if (args.size() != 1)
-        throw InputError("display: invalid number of arguments");
     for (auto &chip : chips) {
         if (dynamic_cast<Input *>(chip.get()) != nullptr) {
             input = dynamic_cast<Input *>(chip.get());
@@ -164,4 +157,44 @@ void nts::CommandLineInput::commandDisplay(std::vector
         }
     }
     displayInOrder(inputs, outputs);
+}
+
+bool nts::CommandLineInput::tryChangePinValue(std::string value,
+    std::string chipType, std::vector<std::unique_ptr<nts::IComponent>> &chips)
+{
+    IComponent *chipFound;
+    Input *input;
+    bool found = false;
+
+    for (auto &chip : chips) {
+        if (chip->getName() == chipType) {
+            found = true;
+            chipFound = chip.get();
+            break;
+        }
+    }
+    if (!found)
+        return false;
+    if (dynamic_cast<Input *>(chipFound) != nullptr) {
+        input = dynamic_cast<Input *>(chipFound);
+        input->changeState(static_cast<nts::Tristate>(value[0] - '0'));
+        return true;
+    }
+    return false;
+}
+
+bool nts::CommandLineInput::commandChangePinValue(std::string input,
+    std::vector<std::unique_ptr<nts::IComponent>> &chips)
+{
+    std::size_t pos = input.find('=');
+    std::string chip;
+    std::string value;
+
+    if (pos == std::string::npos)
+        return false;
+    chip = input.substr(0, pos);
+    value = input.substr(pos + 1);
+    if (value != "0" && value != "1" && value != "U")
+        return false;
+    return tryChangePinValue(value, chip, chips);
 }

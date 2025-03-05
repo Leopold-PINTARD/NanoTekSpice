@@ -37,17 +37,20 @@ namespace nts {
                 std::vector<std::unique_ptr<nts::IComponent>> &chips);
             void registerCommand();
             void commandExit(std::vector<std::unique_ptr<nts::IComponent>>
-                &chips, std::vector<std::string> args);
+                &chips);
             void commandDisplay(std::vector<std::unique_ptr<nts::IComponent>>
-                &chips, std::vector<std::string> args);
+                &chips);
             void displayInOrder(std::vector<std::pair<std::string,
                 std::string>> inputs, std::vector<std::pair<std::string,
                 std::string>> outputs);
+            bool commandChangePinValue(std::string input, std::vector
+                <std::unique_ptr<nts::IComponent>> &chips);
+            bool tryChangePinValue(std::string value, std::string chipType,
+                std::vector<std::unique_ptr<nts::IComponent>> &chips);
         protected:
         private:
             std::string introString;
-            std::unordered_map<std::string,
-                std::function<void(std::vector<std::unique_ptr<nts::
-                IComponent>> &chips, std::vector<std::string>)>> commands;
+            std::unordered_map<std::string, std::function<void(std::vector
+                <std::unique_ptr<nts::IComponent>>&)>> commands;
     };
 }
