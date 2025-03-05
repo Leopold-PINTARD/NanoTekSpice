@@ -18,6 +18,7 @@
 #include "components/basic/Xor.hpp"
 #include "components/basic/Or.hpp"
 #include "components/basic/Not.hpp"
+#include "components/special/Input.hpp"
 
 
 // static void redirect_all_stdout(void)
@@ -121,7 +122,21 @@ Test(xor_tests, undefined_test)
 {
     nts::Xor xor_gate("test");
     class nts::True true_gate("vrai");
+    nts::Input input_gate("input");
     true_gate.setLink(0, xor_gate, 0);
+    input_gate.setLink(0, xor_gate, 1);
+    xor_gate.simulate(1);
+    auto result = xor_gate.compute(2);
+    cr_assert_eq(result, nts::Undefined);
+}
+
+Test(xor_tests, undefined_test2)
+{
+    nts::Xor xor_gate("test");
+    class nts::False false_gate("faux");
+    nts::Input input_gate("input");
+    false_gate.setLink(0, xor_gate, 1);
+    input_gate.setLink(0, xor_gate, 0);
     xor_gate.simulate(1);
     auto result = xor_gate.compute(2);
     cr_assert_eq(result, nts::Undefined);
