@@ -19,8 +19,9 @@ namespace nts {
             void changeState(Tristate new_state);
             virtual void simulate(size_t tick) override;
         protected:
-        private:
+            bool toChange;
             nts::Tristate nextState;
+        private:
     };
 }
 

@@ -34,6 +34,21 @@ nts::Parser::~Parser()
 {
 }
 
+void nts::Parser::setContent(std::vector<std::string> content)
+{
+    _content = content;
+    try {
+        removeComments();
+        removeTrallingSpaces();
+        removeEmptyLines();
+        replaceTabs();
+        replaceDoubleSpaces();
+        handleSection();
+    } catch (const std::exception &e) {
+        throw ParserError(e.what());
+    }
+}
+
 void nts::Parser::readContent()
 {
     FileReader reader(_path);

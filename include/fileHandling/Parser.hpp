@@ -33,6 +33,7 @@ namespace nts {
 
             Parser(std::string path);
             ~Parser();
+            void setContent(std::vector<std::string> content);
             void readContent();
             void removeComments();
             void removeEmptyLines();

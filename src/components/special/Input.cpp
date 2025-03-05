@@ -11,6 +11,7 @@ nts::Input::Input(std::string name)
 {
     this->compName = name;
     nextState = nts::Tristate::Undefined;
+    toChange = false;
 }
 
 nts::Input::~Input()
@@ -26,10 +27,13 @@ nts::Tristate nts::Input::compute(size_t pin)
 void nts::Input::changeState(Tristate new_state)
 {
     nextState = new_state;
+    toChange = true;
 }
 
 void nts::Input::simulate(size_t tick)
 {
     (void)tick;
     this->pins[0].setStatus(nextState);
+    if (toChange)
+        toChange = false;
 }
