@@ -44,6 +44,7 @@ TESTS_SRC	=	tests/tests.cpp			\
 				tests/basicGates.cpp	\
 				tests/specialGates.cpp	\
 				tests/factoryTests.cpp	\
+				tests/fileReaderTests.cpp	\
 
 OBJ	=	$(SRC:.cpp=.o)
 
