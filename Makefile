@@ -43,6 +43,7 @@ SRC	=	src/commandLineHandling/CommandLineInput.cpp	\
 TESTS_SRC	=	tests/tests.cpp			\
 				tests/basicGates.cpp	\
 				tests/specialGates.cpp	\
+				tests/factoryTests.cpp	\
 
 OBJ	=	$(SRC:.cpp=.o)
 
