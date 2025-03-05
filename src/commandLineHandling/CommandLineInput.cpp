@@ -32,6 +32,7 @@ nts::CommandLineInput::CommandLineInput(std::string intro)
 {
     introString = intro;
     end = false;
+    tick = 0;
     registerCommand();
 }
 
@@ -70,6 +71,10 @@ void nts::CommandLineInput::registerCommand()
     commands.emplace("display", [this](std::vector<std::unique_ptr
         <nts::IComponent>> &chips) {
         this->commandDisplay(chips);
+    });
+    commands.emplace("simulate", [this](std::vector<std::unique_ptr
+        <nts::IComponent>> &chips) {
+        this->commandSimulate(chips);
     });
 }
 
@@ -146,6 +151,7 @@ void nts::CommandLineInput::commandDisplay(std::vector<std::unique_ptr
     Input *input;
     Output *output;
 
+    std::cout << "tick: " << tick << std::endl;
     for (auto &chip : chips) {
         if (dynamic_cast<Input *>(chip.get()) != nullptr) {
             input = dynamic_cast<Input *>(chip.get());
@@ -198,4 +204,11 @@ bool nts::CommandLineInput::commandChangePinValue(std::string input,
     if (value != "0" && value != "1" && value != "U")
         return false;
     return tryChangePinValue(value, chip, chips);
+}
+
+void nts::CommandLineInput::commandSimulate(std::vector<std::unique_ptr
+    <nts::IComponent>> &chips)
+{
+    tick++;
+    (void)chips;
 }

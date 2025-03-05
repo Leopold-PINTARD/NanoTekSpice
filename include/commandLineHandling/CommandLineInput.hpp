@@ -47,8 +47,11 @@ namespace nts {
                 <std::unique_ptr<nts::IComponent>> &chips);
             bool tryChangePinValue(std::string value, std::string chipType,
                 std::vector<std::unique_ptr<nts::IComponent>> &chips);
+            void commandSimulate(std::vector<std::unique_ptr<nts::IComponent>>
+                &chips);
         protected:
         private:
+            size_t tick;
             std::string introString;
             std::unordered_map<std::string, std::function<void(std::vector
                 <std::unique_ptr<nts::IComponent>>&)>> commands;
