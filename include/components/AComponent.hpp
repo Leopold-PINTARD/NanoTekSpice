@@ -30,6 +30,7 @@ namespace nts {
             //When appending a pin to a component, use pins.emplace_back(Pin::Type).
             //Type can be either Input or Output.
             std::vector<Pin> pins;
+            unsigned int currentTick = 0;
     };
 }
 
