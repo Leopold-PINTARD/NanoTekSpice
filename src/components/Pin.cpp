@@ -7,7 +7,8 @@
 
 #include "components/Pin.hpp"
 
-nts::Pin::Pin(Pin::Type type) : status(Undefined), pinType(type)
+nts::Pin::Pin(Pin::Type type) : status(Undefined), pinType(type),
+    currentTick(0)
 {
 }
 
@@ -57,6 +58,11 @@ nts::Pin::Type nts::Pin::getType() const
     return pinType;
 }
 
+unsigned int nts::Pin::getCurrentTick() const
+{
+    return currentTick;
+}
+
 //This function is used to update the status of an input pin as it can only be
 //linked to one output pin. It will compute the value of the linked output and
 //set it as the new status of the input pin.
@@ -67,9 +73,11 @@ nts::Pin::Type nts::Pin::getType() const
 //Return value: The (maybe new) status of the pin.
 enum nts::Tristate nts::Pin::updatePinStatus(size_t input_comp)
 {
+    currentTick++;
     if (this->getType() == Pin::Input && this->linkedComps.size() > 0 &&
-        input_comp < this->linkedComps.size())
+        input_comp < this->linkedComps.size()) {
         this->setStatus(this->getLinkedComp(input_comp).compute(
             this->getLinkedPin(input_comp)));
+    }
     return this->getStatus();
 }

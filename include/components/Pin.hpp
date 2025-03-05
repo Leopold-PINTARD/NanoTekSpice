@@ -29,11 +29,13 @@ namespace nts {
             void addLinkedComp(IComponent &comp, size_t pin);
             bool containsLinked(IComponent &linkedComp, size_t linkedPin);
             Type getType() const;
+            unsigned int getCurrentTick() const;
         private:
             std::vector<std::reference_wrapper<IComponent>>linkedComps;
             std::vector<size_t> linkedPins;
             enum nts::Tristate status;
             Type pinType;
+            unsigned int currentTick;
     };
 }
 
