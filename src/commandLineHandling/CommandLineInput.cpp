@@ -192,7 +192,17 @@ bool nts::CommandLineInput::tryChangePinValue(std::string value,
         return false;
     if (dynamic_cast<Input *>(chipFound) != nullptr) {
         input = dynamic_cast<Input *>(chipFound);
-        input->changeState(static_cast<nts::Tristate>(value[0] - '0'));
+        switch (value[0]) {
+            case '0':
+                input->changeState(False);
+                break;
+            case '1':
+                input->changeState(True);
+                break;
+            case 'U':
+                input->changeState(Undefined);
+                break;
+        }
         return true;
     }
     return false;
