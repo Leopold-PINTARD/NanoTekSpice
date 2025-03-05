@@ -49,6 +49,8 @@ namespace nts {
                 std::vector<std::unique_ptr<nts::IComponent>> &chips);
             void commandSimulate(std::vector<std::unique_ptr<nts::IComponent>>
                 &chips);
+            void commandLoop(std::vector<std::unique_ptr<nts::IComponent>>
+                &chips);
         protected:
         private:
             size_t tick;
