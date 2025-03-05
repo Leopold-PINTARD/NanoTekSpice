@@ -47,6 +47,7 @@ TESTS_SRC	=	tests/tests.cpp			\
 				tests/fileReaderTests.cpp	\
 				tests/parserTests.cpp	\
 				tests/commandLineTests.cpp	\
+				tests/clockTests.cpp	\
 
 OBJ	=	$(SRC:.cpp=.o)
 

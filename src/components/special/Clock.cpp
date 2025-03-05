@@ -25,6 +25,11 @@ nts::Tristate nts::Clock::compute(size_t pin)
 void nts::Clock::simulate(size_t tick)
 {
     (void)tick;
+    if (toChange) {
+        this->pins[0].setStatus(nextState);
+        toChange = false;
+        return;
+    }
     if (this->pins[0].getStatus() == nts::Tristate::True)
         this->pins[0].setStatus(nts::Tristate::False);
     else if (this->pins[0].getStatus() == nts::Tristate::False)
