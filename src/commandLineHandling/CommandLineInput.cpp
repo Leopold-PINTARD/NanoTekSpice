@@ -210,5 +210,8 @@ void nts::CommandLineInput::commandSimulate(std::vector<std::unique_ptr
     <nts::IComponent>> &chips)
 {
     tick++;
-    (void)chips;
+    for (auto &chip : chips) {
+        if (dynamic_cast<Output *>(chip.get()) != nullptr)
+            chip->simulate(tick);
+    }
 }
