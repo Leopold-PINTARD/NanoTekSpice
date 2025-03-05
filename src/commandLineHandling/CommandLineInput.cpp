@@ -10,6 +10,7 @@
 #include "components/special/Output.hpp"
 #include <iostream>
 #include <sstream>
+#include <algorithm>
 
 nts::CommandLineInput::InputError::InputError(std::string const &message)
 {
