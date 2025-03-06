@@ -30,6 +30,14 @@ Test(clock_tests, set_state_false)
     cr_assert_eq(clock.compute(0), nts::False);
 }
 
+Test(clock_tests, set_state_undefined)
+{
+    nts::Clock clock("test_clock");
+    clock.changeState(nts::Undefined);
+    clock.simulate(1);
+    cr_assert_eq(clock.compute(0), nts::Undefined);
+}
+
 Test(clock_tests, state_toggle)
 {
     nts::Clock clock("test_clock");
@@ -42,4 +50,18 @@ Test(clock_tests, state_toggle)
 
     clock.simulate(1);
     cr_assert_eq(clock.compute(0), nts::True);
+}
+
+Test(clock_tests, state_toggle_undefined)
+{
+    nts::Clock clock("test_clock");
+    clock.changeState(nts::Undefined);
+    clock.simulate(1);
+    cr_assert_eq(clock.compute(0), nts::Undefined);
+
+    clock.simulate(1);
+    cr_assert_eq(clock.compute(0), nts::Undefined);
+
+    clock.simulate(1);
+    cr_assert_eq(clock.compute(0), nts::Undefined);
 }
