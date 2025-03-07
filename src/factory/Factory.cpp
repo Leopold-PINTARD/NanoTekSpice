@@ -17,6 +17,7 @@
 #include "../../include/components/special/Input.hpp"
 #include "../../include/components/special/Output.hpp"
 #include "../../include/components/special/Clock.hpp"
+#include "components/advanced/Chip4001.hpp"
 
 nts::Factory::FactoryError::FactoryError(std::string message)
 {
@@ -36,6 +37,7 @@ nts::Factory::Factory()
 {
     registerBasicComponents();
     registerSpecialComponents();
+    registerAdvancedComponents();
 }
 
 nts::Factory::~Factory()
@@ -77,6 +79,13 @@ void nts::Factory::registerBasicComponents()
     };
     _map["nand"] = [](const std::string &name) -> nts::IComponent* {
         return new nts::Nand(name);
+    };
+}
+
+void nts::Factory::registerAdvancedComponents()
+{
+    _map["4001"] = [](const std::string &name) -> nts::IComponent* {
+        return new nts::Chip4001(name);
     };
 }
 

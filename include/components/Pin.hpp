@@ -17,7 +17,8 @@ namespace nts {
         public:
             enum Type {
                 Input = 0,
-                Output = 1
+                Output = 1,
+                Ignore = 2
             };
             Pin(Pin::Type type);
             ~Pin();

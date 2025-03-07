@@ -39,6 +39,7 @@ SRC	=	src/commandLineHandling/CommandLineInput.cpp	\
 		src/components/special/Input.cpp				\
 		src/components/special/Output.cpp				\
 		src/components/special/Clock.cpp				\
+		src/components/advanced/Chip4001.cpp			\
 
 TESTS_SRC	=	tests/tests.cpp			\
 				tests/basicGates.cpp	\
