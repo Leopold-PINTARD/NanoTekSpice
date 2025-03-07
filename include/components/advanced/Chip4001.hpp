@@ -9,8 +9,8 @@
 
 #include "components/AComponent.hpp"
 #include <vector>
-#include "components/basic/Not.hpp"
-#include "components/basic/Or.hpp"
+#include "components/basic/Nor.hpp"
+#include <unordered_map>
 
 namespace nts {
     class Chip4001 : public AComponent {
@@ -21,7 +21,8 @@ namespace nts {
             void linkChipsets();
         protected:
         private:
-            std::vector<std::unique_ptr<nts::Not>> not_gates;
-            std::vector<std::unique_ptr<nts::Or>> or_gates;
+            std::vector<nts::Input> input_gates;
+            std::vector<nts::Nor> nor_gates;
+            std::vector<nts::Output> output_gates;
     };
 }

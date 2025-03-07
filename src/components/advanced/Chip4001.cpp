@@ -34,46 +34,28 @@ nts::Chip4001::~Chip4001()
 
 nts::Tristate nts::Chip4001::compute(size_t pin)
 {
-    Tristate result = Tristate::Undefined;
-    size_t not_gate_index;
-
-    if (pins[pin].getType() == Pin::Ignore)
-        return Tristate::Undefined;
-    if (pins[pin].getType() == Pin::Input) {
-        std::cout << "pin: " << pin << std::endl;
-        std::cout << "pin lié: " << pins[pin].getLinkedComp(0).getName() << std::endl;
-        std::cout << "pin lié: " << pins[pin].getLinkedPin(1) << std::endl;
-        pins[pin].updatePinStatus(); // recursion infinie ici
-        return pins[pin].getStatus();
+    if (this->pins[pin].getType() == Pin::Input) {
+        this->pins[pin].updatePinStatus();
+        this->input_gates[pin].changeState(this->pins[pin].getStatus());
+        this->input_gates[pin].simulate(1);
+        return this->input_gates[pin].compute(0);
     }
-    if (pin == 2)
-        not_gate_index = 0;
-    else if (pin == 3)
-        not_gate_index = 1;
-    else if (pin == 9)
-        not_gate_index = 2;
-    else if (pin == 10)
-        not_gate_index = 3;
-    else
-        return Tristate::Undefined;
-    result = not_gates[not_gate_index]->compute(1);
-    pins[pin].setStatus(result);
-    return result;
+    this->output_gates[pin].simulate(this->pins[0].getCurrentTick());
+    return this->output_gates[pin].compute(0);
 }
 
 void nts::Chip4001::linkChipsets()
 {
-    const int inputs[4][2] = {{0, 1}, {4, 5}, {7, 8}, {11, 12}};
-    const int outputs[4] = {2, 3, 9, 10};
+    size_t input_pins[] = {0, 1, 4, 5, 7, 8, 11, 12};
+    int output_pins[] = {2, 3, 9, 10};
 
     for (int i = 0; i < 4; i++) {
-        not_gates.push_back(std::make_unique<nts::Not>("not" + std::to_string(i)));
-        or_gates.push_back(std::make_unique<nts::Or>("or" + std::to_string(i)));
-        or_gates[i]->setLink(2, *not_gates[i], 0);
-    }
-    for (int i = 0; i < 4; i++) {
-        this->setLink(inputs[i][0], *or_gates[i], 0);
-        this->setLink(inputs[i][1], *or_gates[i], 1);
-        not_gates[i]->setLink(1, *this, outputs[i]);
+        input_gates.emplace_back("input_a_" + std::to_string(i));
+        input_gates.emplace_back("input_b_" + std::to_string(i));
+        nor_gates.emplace_back("nor_" + std::to_string(i));
+        output_gates.emplace_back("output_" + std::to_string(i));
+        input_gates[i].setLink(0, nor_gates[i], 0);
+        input_gates[i + 1].setLink(0, nor_gates[i], 1);
+        nor_gates[i].setLink(2, output_gates[i], 0);
     }
 }
