@@ -12,6 +12,7 @@
 #include "components/basic/Not.hpp"
 #include "components/basic/Xor.hpp"
 #include "components/basic/Or.hpp"
+#include "components/basic/Nor.hpp"
 #include "../../include/components/special/True.hpp"
 #include "../../include/components/special/False.hpp"
 #include "../../include/components/special/Input.hpp"
@@ -79,6 +80,9 @@ void nts::Factory::registerBasicComponents()
     };
     _map["nand"] = [](const std::string &name) -> nts::IComponent* {
         return new nts::Nand(name);
+    };
+    _map["nor"] = [](const std::string &name) -> nts::IComponent* {
+        return new nts::Nor(name);
     };
 }
 
