@@ -81,6 +81,7 @@ tests_run: fclean
 	@g++ -o unit_tests $(SRC) $(TESTS_SRC) $(CPPTESTFLAGS)
 	@./unit_tests
 	@gcovr --exclude tests/
+	@gcovr -e tests --branches
 
 clean:
 	@echo "$(RED)🧹 Cleaning up...$(NC)"
